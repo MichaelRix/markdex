@@ -15,7 +15,8 @@ from markdown import markdown
 
 def readfile(filename, fileop = 'r'):
     try:
-        f = open(filename, fileop)
+        if ('b' in fileop): f = open(filename, fileop)
+        else: f = open(filename, fileop, encoding = 'utf-8')
         return f.read()
     except:
         raise
@@ -83,7 +84,7 @@ def handle(request_uri):
     elif isdir(path):
         return process_dir(request_uri)
     else:
-        return page_404()
+        return page_404(request_uri)
 
 @app.route('/')
 def index():
