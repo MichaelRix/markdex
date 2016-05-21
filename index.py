@@ -58,23 +58,20 @@ def process_file(request_uri):
         html = markdown(md)
         return render_template('markdown.html', title = request_uri, content = html)
 
-def list_dir(dir_url):
-    things = set()
-    for r, dirs, files in walk(root + dir_uri):
-        for name in dirs:
-            if isdir(root + dir_uri + name): things.add(name)
-        for name in files:
-            if (name.endswith('.md')):
-                name = name[:-3]
-                things.add(name)
-    return render_template('listing.html', path = '/' + dir_uri, things = things)
-
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
     if isfile(root + dir_uri + 'index.md'):
         return process_file(dir_uri + 'index')
     elif dir_listing:
-        return list_dir(dir_uri);
+        things = set()
+        for r, dirs, files in walk(root + dir_uri):
+            for name in dirs:
+                if isdir(root + dir_uri + name): things.add(name)
+            for name in files:
+                if (name.endswith('.md')):
+                    name = name[:-3]
+                    things.add(name)
+        return render_template('listing.html', path = '/' + dir_uri, things = things)
     else:
         return page_403(dir_uri)
 
