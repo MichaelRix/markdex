@@ -50,9 +50,13 @@ def page_403(request_uri):
     message('Issued a 403 while handling /%s .' % (request_uri))
     return render_template('403.html', uri = request_uri)
 
+def md_uri(request_uri):
+    if (with_extname): return root + request_uri
+    else: return root + request_uri + '.md';
+
 def process_file(request_uri):
     try:
-        md = readfile(root + request_uri + '.md')
+        md = readfile(md_uri(request_uri))
     except:
         return page_404(request_uri)
     else:
@@ -62,7 +66,7 @@ def process_file(request_uri):
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
     if isfile(root + dir_uri + 'index.md'):
-        return process_file(dir_uri + 'index')
+        return process_file(dir_uri + 'index.md' if with_extname else dir_uri + 'index')
     elif dir_listing:
         things = set()
         for r, dirs, files in walk(root + dir_uri):
@@ -70,7 +74,8 @@ def process_dir(dir_uri):
                 if isdir(root + dir_uri + name): things.add(name)
             for name in files:
                 if (name.endswith('.md')):
-                    name = name[:-3]
+                    if not with_extname: name = name[:-3]
+                    # 秘製賣萌 233333~
                     things.add(name)
         return render_template('listing.html', path = '/' + dir_uri, things = things)
     else:
@@ -78,10 +83,9 @@ def process_dir(dir_uri):
 
 @app.route('/<path:request_uri>')
 def handle(request_uri):
-    path = root + request_uri
-    if isfile(path + '.md'):
+    if isfile(md_uri(request_uri)):
         return process_file(request_uri)
-    elif isdir(path):
+    elif isdir(root + request_uri):
         return process_dir(request_uri)
     else:
         return page_404(request_uri)
