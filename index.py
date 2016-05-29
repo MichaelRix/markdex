@@ -9,7 +9,7 @@ if not 'version' in dir():
     exit()
 
 from flask import Flask, Response, render_template
-from os import listdir, walk
+from os import listdir
 from os.path import isdir, isfile
 from markdown import markdown
 
@@ -69,14 +69,12 @@ def process_dir(dir_uri):
         return process_file(dir_uri + 'index.md' if with_extname else dir_uri + 'index')
     elif dir_listing:
         things = set()
-        for r, dirs, files in walk(root + dir_uri):
-            for name in dirs:
-                if isdir(root + dir_uri + name): things.add(name)
-            for name in files:
-                if (name.endswith('.md')):
-                    if not with_extname: name = name[:-3]
-                    # 秘製賣萌 233333~
-                    things.add(name)
+        for name in listdir(root + dir_uri):
+            if isdir(root + dir_uri + name): things.add(name)
+            if (name.endswith('.md')):
+                if not with_extname: name = name[:-3]
+                # 秘製賣萌 233333~
+                things.add(name)
         return render_template('listing.html', path = '/' + dir_uri, things = things)
     else:
         return page_403(dir_uri)
