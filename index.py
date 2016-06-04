@@ -50,13 +50,27 @@ def page_403(request_uri):
     message('Issued a 403 while handling /%s .' % (request_uri))
     return render_template('403.html', uri = request_uri)
 
-def md_uri(request_uri):
-    if (with_extname): return root + request_uri
-    else: return root + request_uri + '.md';
+def u2path(request_uri):
+    # Returns path starts at root
+    return root + request_uri
+
+def u2fpath(request_uri):
+    # Returns real file path according to request uri
+    if with_extname: return root + request_uri
+    else: return root + request_uri + '.md'
+
+def ucreate(uri_noext):
+    # Returns a request uri according to uri without ext
+    if with_extname: return uri_noext + '.md'
+    else: return uri_noext
+
+def un2fpath(uri_noext):
+    # Returns real file path according to uri without ext
+    return u2fpath(ucreate(uri_noext))
 
 def process_file(request_uri):
     try:
-        md = readfile(md_uri(request_uri))
+        md = readfile(u2fpath(request_uri))
     except:
         return page_404(request_uri)
     else:
@@ -65,32 +79,39 @@ def process_file(request_uri):
 
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
-    if isfile(root + dir_uri + 'index.md'):
-        return process_file(dir_uri + 'index.md' if with_extname else dir_uri + 'index')
+    if isfile(u2path(dir_uri) + 'index.md'):
+        return process_file(ucreate(dir_uri + 'index'))
     elif dir_listing:
         things = set()
-        for name in listdir(root + dir_uri):
-            if isdir(root + dir_uri + name): things.add(name)
+        for name in listdir(u2path(dir_uri)):
+            if isdir(u2path(dir_uri + name)): things.add(name)
             if (name.endswith('.md')):
                 if not with_extname: name = name[:-3]
                 # 秘製賣萌 233333~
                 things.add(name)
-        return render_template('listing.html', path = '/' + dir_uri, things = things)
+        if isfile(u2path(dir_uri + dl_header)):
+            header = readfile(u2path(dir_uri + dl_header))
+            return render_template('listing.html', path = '/' + dir_uri, things = things, header = header)
+        else:
+            return render_template('listing.html', path = '/' + dir_uri, things = things)
     else:
         return page_403(dir_uri)
 
 @app.route('/<path:request_uri>')
 def handle(request_uri):
-    if isfile(md_uri(request_uri)):
+    if isfile(u2fpath(request_uri)):
         return process_file(request_uri)
-    elif isdir(root + request_uri):
+    elif isdir(u2path(request_uri)):
         return process_dir(request_uri)
     else:
         return page_404(request_uri)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if isfile(un2fpath('index')):
+        return process_file(ucreate('index'))
+    else:
+        return render_template('index.html')
 
 if __name__ == '__main__':
 	app.run(host = host, port = port)

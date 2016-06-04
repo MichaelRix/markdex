@@ -22,6 +22,9 @@ template_folder = 'template/'
 dir_listing = True
 # Allow dir listing if no index is found
 
+dl_header = '.desc'
+# Add what file content before file listing
+
 with_extname = True
 # Url routing for .md files.
 # True -> must have the .md extension
