@@ -15,6 +15,8 @@ port = 5000
 # SERVER port
 
 root = 'root/'
+static_folder = 'static/'
+template_folder = 'template/'
 # Document root: Where you place .md files
 
 dir_listing = True

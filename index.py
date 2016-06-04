@@ -24,7 +24,7 @@ def readfile(filename, fileop = 'r'):
 def message(text):
     print('[ SERVER ] %s' % (text))
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = static_folder, template_folder = template_folder)
 
 try:
     style_css = readfile('style.css')
