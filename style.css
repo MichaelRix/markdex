@@ -1,77 +1,53 @@
 /* CSS of GitHub Markdown */
-.markdown-preview:not([data-use-github-style]){padding:2em;font-size:1.2em;color:#383a42;overflow:auto;background-color:#fafafa}
-.markdown-preview:not([data-use-github-style])>:first-child{margin-top:0}
-.markdown-preview:not([data-use-github-style]) h1,.markdown-preview:not([data-use-github-style]) h2,.markdown-preview:not([data-use-github-style]) h3,.markdown-preview:not([data-use-github-style]) h4,.markdown-preview:not([data-use-github-style]) h5,.markdown-preview:not([data-use-github-style]) h6{line-height:1.2;margin-top:1.5em;margin-bottom:.5em;color:#000}
-.markdown-preview:not([data-use-github-style]) h1{font-size:2.4em;font-weight:300}
-.markdown-preview:not([data-use-github-style]) h2{font-size:1.8em;font-weight:400}
-.markdown-preview:not([data-use-github-style]) h3{font-size:1.5em;font-weight:500}
-.markdown-preview:not([data-use-github-style]) h4{font-size:1.2em;font-weight:600}
-.markdown-preview:not([data-use-github-style]) h5{font-size:1.1em;font-weight:600}
-.markdown-preview:not([data-use-github-style]) h6{font-size:1em;font-weight:600}
-.markdown-preview:not([data-use-github-style]) strong{color:#000}
-.markdown-preview:not([data-use-github-style]) del{color:#5e616e}
-.markdown-preview:not([data-use-github-style]) a,.markdown-preview:not([data-use-github-style]) a code{color:#526fff}
-.markdown-preview:not([data-use-github-style]) img{max-width:100%}
-.markdown-preview:not([data-use-github-style])>p{margin-top:0;margin-bottom:1.5em}
-.markdown-preview:not([data-use-github-style])>ol,.markdown-preview:not([data-use-github-style])>ul{margin-bottom:1.5em}
-.markdown-preview:not([data-use-github-style]) blockquote{margin:1.5em 0;font-size:inherit;color:#5e616e;border-color:#d1d1d2;border-width:4px}
-.markdown-preview:not([data-use-github-style]) hr{margin:3em 0;border-top-width:2px;border-top-style:dashed;border-top-color:#d1d1d2;background:0 0}
-.markdown-preview:not([data-use-github-style]) table{margin:1.5em 0}
-.markdown-preview:not([data-use-github-style]) th{color:#000}
-.markdown-preview:not([data-use-github-style]) td,.markdown-preview:not([data-use-github-style]) th{padding:.66em 1em;border:1px solid #d1d1d2}
-.markdown-preview:not([data-use-github-style]) code{color:#000;background-color:#eaeaeb}
-.markdown-preview:not([data-use-github-style]) pre.editor-colors{margin:1.5em 0;padding:1em;font-size:.92em;border-radius:3px;background-color:#f0f0f0}
-.markdown-preview:not([data-use-github-style]) kbd{color:#000;border-width:1px 1px 2px;border-style:solid;border-color:#d1d1d2 #d1d1d2 #c1c1c2;background-color:#eaeaeb}
-.markdown-preview[data-use-github-style]{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;line-height:1.6;word-wrap:break-word;padding:30px;font-size:16px;color:#333;overflow:scroll;overflow-x:hidden;background-color:#fff}
-.markdown-preview[data-use-github-style]>:first-child{margin-top:0!important}
-.markdown-preview[data-use-github-style]>:last-child{margin-bottom:0!important}
-.markdown-preview[data-use-github-style] a:not([href]){color:inherit;text-decoration:none}
-.markdown-preview[data-use-github-style] .absent{color:#c00}
-.markdown-preview[data-use-github-style] .anchor{position:absolute;top:0;left:0;display:block;padding-right:6px;padding-left:30px;margin-left:-30px}
-.markdown-preview[data-use-github-style] .anchor:focus{outline:0}
-.markdown-preview[data-use-github-style] h1,.markdown-preview[data-use-github-style] h2,.markdown-preview[data-use-github-style] h3,.markdown-preview[data-use-github-style] h4,.markdown-preview[data-use-github-style] h5,.markdown-preview[data-use-github-style] h6{position:relative;margin-top:1em;margin-bottom:16px;font-weight:700;line-height:1.4}
-.markdown-preview[data-use-github-style] h1 .octicon-link,.markdown-preview[data-use-github-style] h2 .octicon-link,.markdown-preview[data-use-github-style] h3 .octicon-link,.markdown-preview[data-use-github-style] h4 .octicon-link,.markdown-preview[data-use-github-style] h5 .octicon-link,.markdown-preview[data-use-github-style] h6 .octicon-link{display:none;color:#000;vertical-align:middle}
-.markdown-preview[data-use-github-style] h1:hover .anchor,.markdown-preview[data-use-github-style] h2:hover .anchor,.markdown-preview[data-use-github-style] h3:hover .anchor,.markdown-preview[data-use-github-style] h4:hover .anchor,.markdown-preview[data-use-github-style] h5:hover .anchor,.markdown-preview[data-use-github-style] h6:hover .anchor{padding-left:8px;margin-left:-30px;text-decoration:none}
-.markdown-preview[data-use-github-style] h1:hover .anchor .octicon-link,.markdown-preview[data-use-github-style] h2:hover .anchor .octicon-link,.markdown-preview[data-use-github-style] h3:hover .anchor .octicon-link,.markdown-preview[data-use-github-style] h4:hover .anchor .octicon-link,.markdown-preview[data-use-github-style] h5:hover .anchor .octicon-link,.markdown-preview[data-use-github-style] h6:hover .anchor .octicon-link{display:inline-block}
-.markdown-preview[data-use-github-style] h1 code,.markdown-preview[data-use-github-style] h1 tt,.markdown-preview[data-use-github-style] h2 code,.markdown-preview[data-use-github-style] h2 tt,.markdown-preview[data-use-github-style] h3 code,.markdown-preview[data-use-github-style] h3 tt,.markdown-preview[data-use-github-style] h4 code,.markdown-preview[data-use-github-style] h4 tt,.markdown-preview[data-use-github-style] h5 code,.markdown-preview[data-use-github-style] h5 tt,.markdown-preview[data-use-github-style] h6 code,.markdown-preview[data-use-github-style] h6 tt{font-size:inherit}
-.markdown-preview[data-use-github-style] h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
-.markdown-preview[data-use-github-style] h1 .anchor{line-height:1}
-.markdown-preview[data-use-github-style] h2{padding-bottom:.3em;font-size:1.75em;line-height:1.225;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
-.markdown-preview[data-use-github-style] h2 .anchor{line-height:1}
-.markdown-preview[data-use-github-style] h3{font-size:1.5em;line-height:1.43}
-.markdown-preview[data-use-github-style] h3 .anchor{line-height:1.2}
-.markdown-preview[data-use-github-style] h4{font-size:1.25em}
-.markdown-preview[data-use-github-style] h4 .anchor{line-height:1.2}
-.markdown-preview[data-use-github-style] h5{font-size:1em}
-.markdown-preview[data-use-github-style] h5 .anchor{line-height:1.1}
-.markdown-preview[data-use-github-style] h6{font-size:1em;color:#777}
-.markdown-preview[data-use-github-style] h6 .anchor{line-height:1.1}
-.markdown-preview[data-use-github-style] blockquote,.markdown-preview[data-use-github-style] dl,.markdown-preview[data-use-github-style] ol,.markdown-preview[data-use-github-style] p,.markdown-preview[data-use-github-style] pre,.markdown-preview[data-use-github-style] table,.markdown-preview[data-use-github-style] ul{margin-top:0;margin-bottom:16px}
-.markdown-preview[data-use-github-style] hr{height:4px;padding:0;margin:16px 0;border:0 none;background-color:#e7e7e7}
-.markdown-preview[data-use-github-style] ol,.markdown-preview[data-use-github-style] ul{padding-left:2em}
-.markdown-preview[data-use-github-style] ol.no-list,.markdown-preview[data-use-github-style] ul.no-list{padding:0;list-style-type:none}
-.markdown-preview[data-use-github-style] ol ol,.markdown-preview[data-use-github-style] ol ul,.markdown-preview[data-use-github-style] ul ol,.markdown-preview[data-use-github-style] ul ul{margin-top:0;margin-bottom:0}
-.markdown-preview[data-use-github-style] li>p{margin-top:16px}
-.markdown-preview[data-use-github-style] dl{padding:0}
-.markdown-preview[data-use-github-style] dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}
-.markdown-preview[data-use-github-style] dl dd{padding:0 16px;margin-bottom:16px}
-.markdown-preview[data-use-github-style] blockquote{padding:0 15px;color:#777;border-left-width:4px;border-left-style:solid;border-left-color:#ddd}
-.markdown-preview[data-use-github-style] blockquote>:first-child{margin-top:0}
-.markdown-preview[data-use-github-style] blockquote>:last-child{margin-bottom:0}
-.markdown-preview[data-use-github-style] table{display:block;width:100%;overflow:auto;word-break:keep-all}
-.markdown-preview[data-use-github-style] table th{font-weight:700}
-.markdown-preview[data-use-github-style] table td,.markdown-preview[data-use-github-style] table th{padding:6px 13px;border:1px solid #ddd}
-.markdown-preview[data-use-github-style] table tr{border-top-width:1px;border-top-style:solid;border-top-color:#ccc;background-color:#fff}
-.markdown-preview[data-use-github-style] table tr:nth-child(2n){background-color:#f8f8f8}
-.markdown-preview[data-use-github-style] img{max-width:100%;box-sizing:border-box}
-.markdown-preview[data-use-github-style] .emoji{max-width:none}
-.markdown-preview[data-use-github-style] span.frame{display:block;overflow:hidden}
-.markdown-preview[data-use-github-style] span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}
-.markdown-preview[data-use-github-style] span.frame span img{display:block;float:left}
-.markdown-preview[data-use-github-style] span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}
-.markdown-preview[data-use-github-style] span.align-center{display:block;overflow:hidden;clear:both}
-.markdown-preview[data-use-github-style] span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}
-.markdown-preview[data-use-github-style] span.align-center span img{margin:0 auto;text-align:center}
-.markdown-preview[data-use-github-style] span.align-right{display:block;overflow:hidden;clear:both}
-.markdown-preview[data-use-github-style] span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}
-
+body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;line-height:1.6;word-wrap:break-word;padding:30px;font-size:16px;color:#333;overflow:scroll;overflow-x:hidden;background-color:#fff}
+body>:first-child{margin-top:0!important}
+body>:last-child{margin-bottom:0!important}
+body a{color:#4078c0;text-decoration:none}
+body .absent{color:#c00}
+body .anchor{position:absolute;top:0;left:0;display:block;padding-right:6px;padding-left:30px;margin-left:-30px}
+body .anchor:focus{outline:0}
+body h1,body h2,body h3,body h4,body h5,body h6{position:relative;margin-top:1em;margin-bottom:16px;font-weight:700;line-height:1.4}
+body h1 .octicon-link,body h2 .octicon-link,body h3 .octicon-link,body h4 .octicon-link,body h5 .octicon-link,body h6 .octicon-link{display:none;color:#000;vertical-align:middle}
+body h1:hover .anchor,body h2:hover .anchor,body h3:hover .anchor,body h4:hover .anchor,body h5:hover .anchor,body h6:hover .anchor{padding-left:8px;margin-left:-30px;text-decoration:none}
+body h1:hover .anchor .octicon-link,body h2:hover .anchor .octicon-link,body h3:hover .anchor .octicon-link,body h4:hover .anchor .octicon-link,body h5:hover .anchor .octicon-link,body h6:hover .anchor .octicon-link{display:inline-block}
+body h1 code,body h1 tt,body h2 code,body h2 tt,body h3 code,body h3 tt,body h4 code,body h4 tt,body h5 code,body h5 tt,body h6 code,body h6 tt{font-size:inherit}
+body h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
+body h1 .anchor{line-height:1}
+body h2{padding-bottom:.3em;font-size:1.75em;line-height:1.225;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
+body h2 .anchor{line-height:1}
+body h3{font-size:1.5em;line-height:1.43}
+body h3 .anchor{line-height:1.2}
+body h4{font-size:1.25em}
+body h4 .anchor{line-height:1.2}
+body h5{font-size:1em}
+body h5 .anchor{line-height:1.1}
+body h6{font-size:1em;color:#777}
+body h6 .anchor{line-height:1.1}
+body blockquote,body dl,body ol,body p,body pre,body table,body ul{margin-top:0;margin-bottom:16px}
+body hr{height:4px;padding:0;margin:16px 0;border:0 none;background-color:#e7e7e7}
+body ol,body ul{padding-left:2em}
+body ol.no-list,body ul.no-list{padding:0;list-style-type:none}
+body ol ol,body ol ul,body ul ol,body ul ul{margin-top:0;margin-bottom:0}
+body li>p{margin-top:16px}
+body dl{padding:0}
+body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}
+body dl dd{padding:0 16px;margin-bottom:16px}
+body blockquote{padding:0 15px;color:#777;border-left-width:4px;border-left-style:solid;border-left-color:#ddd}
+body blockquote>:first-child{margin-top:0}
+body blockquote>:last-child{margin-bottom:0}
+body table{display:block;width:100%;overflow:auto;word-break:keep-all}
+body table th{font-weight:700}
+body table td,body table th{padding:6px 13px;border:1px solid #ddd}
+body table tr{border-top-width:1px;border-top-style:solid;border-top-color:#ccc;background-color:#fff}
+body table tr:nth-child(2n){background-color:#f8f8f8}
+body img{max-width:100%;box-sizing:border-box}
+body .emoji{max-width:none}
+body span.frame{display:block;overflow:hidden}
+body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}
+body span.frame span img{display:block;float:left}
+body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}
+body span.align-center{display:block;overflow:hidden;clear:both}
+body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}
+body span.align-center span img{margin:0 auto;text-align:center}
+body span.align-right{display:block;overflow:hidden;clear:both}
+body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}
