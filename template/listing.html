@@ -71,9 +71,7 @@ a:hover {
 <i class="fa fa-2x fa-ellipsis-v" style="float: right;"></i>
 </p></div>
 <div id="main">
-<pre>{% if header is defined %}
-{{ header | safe }}
-{% endif %}
+<pre>{% if header is defined %}{{ header | safe }}{% endif %}
 {% for name in things %}<a href="{{ path }}{{ name }}">{{ name }}</a>
 {% endfor %}
 </pre>
