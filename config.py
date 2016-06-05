@@ -15,9 +15,11 @@ port = 5000
 # SERVER port
 
 root = 'root/'
-static_folder = 'static/'
-template_folder = 'template/'
 # Document root: Where you place .md files
+
+static_folder = 'static'
+template_folder = 'template'
+# Do not ends with '/'
 
 dir_listing = True
 # Allow dir listing if no index is found
