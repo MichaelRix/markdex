@@ -82,13 +82,18 @@ def process_dir(dir_uri):
     if isfile(u2path(dir_uri) + 'index.md'):
         return process_file(ucreate(dir_uri + 'index'))
     elif dir_listing:
-        things = set()
+        dirs = []
+        files = []
         for name in listdir(u2path(dir_uri)):
-            if isdir(u2path(dir_uri + name)): things.add(name)
+            if isdir(u2path(dir_uri + name)): dirs.append(name)
             if (name.endswith('.md')):
                 if not with_extname: name = name[:-3]
                 # 秘製賣萌 233333~
-                things.add(name)
+                files.append(name)
+        dirs.sort()
+        files.sort()
+        things = dirs + files
+        del dirs, files
         if isfile(u2path(dir_uri + dl_header)):
             header = readfile(u2path(dir_uri + dl_header))
             return render_template('listing.html', path = '/' + dir_uri, things = things, header = header)
