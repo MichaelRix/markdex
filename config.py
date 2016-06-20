@@ -3,11 +3,11 @@
 
 if __name__ == '__main__': exit()
 
-version = '1.0.0.1'
+version = '1.0.0.2'
 # Mainline version: no need to be modified.
 
 host = '0.0.0.0'
-# WSGI host:
+# WSGI host;
 # 127.0.0.1 -> localhost
 # 0.0.0.0 -> all
 
@@ -19,15 +19,16 @@ root = 'root/'
 
 static_folder = 'static'
 template_folder = 'template'
-# Do not ends with '/'
+# Do not end with '/'
 
 dir_listing = True
 # Allow dir listing if no index is found
 
 dl_header = '.desc'
-# Add what file content before file listing
+# Dir listing header
+# Show the content of which file before file listing
 
 with_extname = True
 # Url routing for .md files.
 # True -> must have the .md extension
-# False -> must not have the .md extension
+# False -> must NOT have the .md extension

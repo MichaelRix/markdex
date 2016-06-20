@@ -1,10 +1,10 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-if not __name__ == '__main__': exit()
+if __name__ != '__main__': exit()
 
 from config import *
-if not 'version' in dir():
+if 'version' not in dir():
     print('[ CRITICAL ] Init failed.');
     exit()
 
@@ -35,11 +35,11 @@ else:
     message('Resources successfully loaded.')
 
 @app.route('/style.css')
-def style():
+def _style_css():
     return Response(style_css, mimetype='text/css')
 
 @app.route('/favicon.ico')
-def favicon():
+def _favicon_ico():
     return Response(favicon_ico, mimetype='image/x-icon')
 
 def page_404(request_uri):
@@ -75,15 +75,16 @@ def process_file(request_uri):
         return page_404(request_uri)
     else:
         html = markdown(md)
-        return render_template('markdown.html', title = request_uri, content = html)
+        return render_template('page.html', title = request_uri, content = html)
 
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
     if isfile(u2path(dir_uri) + 'index.md'):
         return process_file(ucreate(dir_uri + 'index'))
     elif dir_listing:
-        dirs = []
-        files = []
+        dirs, files = [], []
+        if dir_uri != '/':
+            dirs.append('..')
         for name in listdir(u2path(dir_uri)):
             if isdir(u2path(dir_uri + name)): dirs.append(name)
             if (name.endswith('.md')):
