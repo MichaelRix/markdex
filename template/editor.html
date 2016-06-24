@@ -160,10 +160,12 @@
             </section>
             <section class="dirtree">
                 <ul class="dirlist">
-                    <li><a class="folder">..</a></li>
-                    <li><a class="folder">css</a></li>
-                    <li><a class="folder">js</a></li>
-                    <li><a class="file current">index.html</a></li>
+{% for folder in folders %}
+                    <li><a class="folder">{{ folder }}</a></li>
+{% endfor %}
+{% for file in files %}
+                    <li><a class="file">{{ file }}</a></li>
+{% endfor %}
                 </ul>
             </section>
             <section class="footer">

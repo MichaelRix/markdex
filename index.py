@@ -8,7 +8,7 @@ if 'version' not in dir():
     print('[ CRITICAL ] Init failed.')
     exit()
 
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template, redirect
 from markdown import markdown
 
 app = Flask(__name__, static_folder = static_folder, template_folder = template_folder)
@@ -24,16 +24,16 @@ def login_page():
 
 @app.route('/__login__', methods = ['POST'])
 def _login_page():
-    try:
-        uname = request.form['uname']
-        upass = request.form['upass']
-        addr = request.remote_addr
-    except:
-        return ''
-    else:
-        return auth_login(uname, upass, addr)
+    return auth_login()
 
-# from editor import * # editor modules
+from editor import * # editor modules
+
+@app.route('/__editor__', methods = ['GET'])
+def editor_page():
+    if auth_still():
+        return backend_listdir('/');
+    else:
+        return redirect('/')
 
 try:
     style_css = readfile('style.css')

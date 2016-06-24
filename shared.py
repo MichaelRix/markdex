@@ -12,7 +12,9 @@ def readfile(filename, fileop = 'r'):
     try:
         if ('b' in fileop): f = open(filename, fileop)
         else: f = open(filename, fileop, encoding = 'utf-8')
-        return f.read()
+        data = f.read()
+        f.close()
+        return data
     except:
         raise
 
