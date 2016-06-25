@@ -48,20 +48,32 @@
             vertical-align: middle;
         }
 
-        .save {
+        .save, .remove {
             border: none;
             background: transparent;
             outline: none;
             font-size: 1rem;
-            color: #666;
             height: 3rem;
+        }
+
+        .remove {
+            color: #fff;
+            transition: background .5s;
+        }
+
+        .remove:hover {
+            background: #f00;
+        }
+
+        .save {
+            color: #333;
             float: right;
             transition: color .5s, background .5s;
         }
 
         .save:hover {
             color: #fff;
-            background: #999;
+            background: #090;
         }
 
         .editor {
@@ -89,16 +101,6 @@
         .end span + span {
             padding-left: 0.5rem;
             border-left: 1px solid #999;
-        }
-
-        .header {
-            text-align: center;
-        }
-
-        .header span {
-            text-align: center;
-            font-size: 2rem;
-            color: #fff;
         }
 
         .dirtree {
@@ -155,9 +157,6 @@
 <body>
     <div class="container">
         <div class="left">
-            <section class="header">
-                <span>Md-Editor</span>
-            </section>
             <section class="dirtree">
                 <ul class="dirlist">
 {% for folder in folders %}
@@ -175,6 +174,7 @@
         <div class="right">
             <section class="top">
                 <p class="title">index.html</p>
+                <input type="button" class="remove" value="RM">
                 <input type="button" class="save" value="SAVE">
             </section>
             <section class="editor">
@@ -187,5 +187,6 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="/static/editor.js"></script>
 
 </html>

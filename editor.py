@@ -4,54 +4,94 @@
 if __name__ == '__main__': exit()
 
 from flask import render_template
-from os.path import isfile, isdir, getsize
+from os import remove, rmdir
+from os.path import isfile, isdir, getsize, abspath
+from functools import wraps # 元編程出現辣！
 from shared import *
 import json
 
-def backend_openfile(uri):
-    if isfile(uri):
-        if getsize(uri) <= 60 * 1024: # 60 KB
-            try:
-                content = readfile(uri, 'r')
-            except:
-                return False
-            else:
-                return content
+def path_qingzhen(func):
+    @wraps(func)
+    def qingzhen(*args, **kwargs):
+        path = args[0]
+        qingzhen = abspath(u2path('/'))
+        if abspath(path).startswith(qingzhen):
+            return func(*args, **kwargs) # 可以，這很清真
+        else: return '無可奉告' # 這路徑不清真
+    return qingzhen
 
-def backend_listdir(uri, ajax = False):
-    if isdir(uri):
+@path_qingzhen
+def backend_openfile(path):
+    if isfile(path):
+        if getsize(path) <= 60 * 1024: # 60 KB
+            try:
+                content = readfile(path, 'r')
+            except:
+                return json.dumps({'status': 'error', 'content': ''})
+            else:
+                return json.dumps({'status': 'ok', 'content': content})
+
+@path_qingzhen
+def backend_listdir(path, ajax = False):
+    # 又寫冗餘代碼了
+    if isdir(path):
+        if not path.endswith('/'): path = path + '/'
         dirs, files = [], []
-        if uri != '/':
+        if path != u2path('/'):
             dirs.append('..')
-        for name in listdir(u2path(uri)):
-            if isdir(u2path(uri + name)): dirs.append(name)
-            if (name.endswith('.md')):
-                if not with_extname: name = name[:-3]
-                # 秘製賣萌 233333~
-                files.append(name)
+        for name in listdir(path):
+            if isdir(path + name): dirs.append(name)
+            else: files.append(name)
+            # 不可能有 又不是目錄也不是文件的存在吧
         dirs.sort()
         files.sort()
         if ajax:
-            return json.dumps({folders: dirs, files: files})
+            return json.dumps({'folders': dirs, 'files': files})
         else:
             return render_template('editor.html', folders = dirs, files = files)
-    else: return False
+    else: return json.dumps({'status': 'nok'})
 
-def backend_createfile(uri):
-    if isfile(uri):
-        return False
+@path_qingzhen
+def backend_createfile(path):
+    if isfile(path):
+        return json.dumps({'status': 'nok'})
     else:
-        f = open(uri, 'w')
+        f = open(path, 'w')
         f.close()
-        return True
+        return json.dumps({'status': 'ok'})
 
-def backend_commitfile(uri, content):
-    if isfile(uri):
+@path_qingzhen
+def backend_commitfile(path, content):
+    if isfile(path):
         try:
-            f = open(uri, w)
+            f = open(path, 'w', encoding = 'utf-8')
             f.write(content)
             f.close()
         except:
-            return False
+            return json.dumps({'status': 'error'})
         else:
-            return True
+            return json.dumps({'status': 'ok'})
+    else:
+        return json.dumps({'status': 'ok'})
+
+@path_qingzhen
+def backend_deletefile(path):
+    if isfile(path):
+        try:
+            remove(path)
+        except:
+            return json.dumps({'status': 'error'})
+        else:
+            return json.dumps({'status': 'ok'})
+    return json.dumps({'status': 'nok'})
+
+@path_qingzhen
+def backend_rmdir(path):
+    if isdir(path):
+        try:
+            rmdir(path)
+        except:
+            return json.dumps({'status': 'error'})
+        else:
+            return json.dumps({'status': 'ok'})
+    return json.dumps({'status': 'nok'})

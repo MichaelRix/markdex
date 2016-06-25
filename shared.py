@@ -31,6 +31,7 @@ def page_403(request_uri):
 
 def u2path(request_uri):
     # Returns path starts at root
+    if request_uri == '/': return root
     return root + request_uri
 
 def u2fpath(request_uri):

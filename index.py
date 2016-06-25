@@ -31,9 +31,34 @@ from editor import * # editor modules
 @app.route('/__editor__', methods = ['GET'])
 def editor_page():
     if auth_still():
-        return backend_listdir('/');
+        act = request.args.get('act')
+        if act == None:
+            return backend_listdir(u2path('/'))
+        else:
+            path = request.args.get('p')
+            if path != None:
+                if act == 'r':
+                    return backend_openfile(path)
+                elif act == 'l':
+                    return backend_listdir(path, ajax = True)
+                elif act == 'c':
+                    return backend_createfile(path)
+                elif act == 'd':
+                    return backend_deletefile(path)
+            return 'excited'
     else:
-        return redirect('/')
+        return redirect('/__login__')
+
+@app.route('/__editor__', methods = ['POST'])
+def _editor_page():
+    if auth_still():
+        act = request.args.get('act')
+        path = request.args.get('p')
+        if act == 'w' and path != None:
+            content = request.form.get('content')
+            return backend_commitfile(path, content)
+    else:
+        return redirect('/__login__')
 
 try:
     style_css = readfile('style.css')
