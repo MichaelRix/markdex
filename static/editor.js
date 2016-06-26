@@ -33,6 +33,12 @@ $ = function(selector) {
         el.html = function(x) {
             el.innerHTML = x;
         };
+        el.on = function(a, b) {
+            el.addEventListener(a, b);
+        };
+        el.off = function(a, b) {
+            el.removeEventListener(a, b);
+        };
         el.forEach = function(x) { x(el); };
         el.each = function(x) { x(el); };
     }
@@ -94,6 +100,7 @@ util = {
     close: function() {
         $('.title').html('* no file is open');
         $('#editor').value = '';
+        $('.words').html('0');
     },
     open: function(path, callback = function() {}) {
         url = '__editor__?act=r&p=' + encodeURI(path);
@@ -103,6 +110,8 @@ util = {
                 content = x.content;
                 $('.title').html(util.filename(path));
                 $('#editor').value = content;
+                $('.words').html(content.length);
+                $('.fpath').html(path);
                 callback(x);
             } else {
                 console.log('An error occured while opening file `' + path + '`;');
@@ -187,7 +196,6 @@ app = {
         }
         util.open(app.fpath(fn), function(x) {
             app.workingfile = fn;
-            $('.fpath').html(app.fpath(fn));
             app.saved(true);
         });
     },

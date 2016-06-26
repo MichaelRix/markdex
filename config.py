@@ -3,7 +3,7 @@
 
 if __name__ == '__main__': exit()
 
-version = '1.0.0.3'
+version = '1.0.0.5'
 # Mainline version: no need to be modified.
 
 host = '0.0.0.0'
