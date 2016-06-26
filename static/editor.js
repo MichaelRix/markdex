@@ -100,7 +100,7 @@ util = {
     close: function() {
         $('.title').html('* no file is open');
         $('#editor').value = '';
-        $('.words').html('0');
+        $('.chars').html('0');
     },
     open: function(path, callback = function() {}) {
         url = '__editor__?act=r&p=' + encodeURI(path);
@@ -110,7 +110,7 @@ util = {
                 content = x.content;
                 $('.title').html(util.filename(path));
                 $('#editor').value = content;
-                $('.words').html(content.length);
+                $('.chars').html(content.length);
                 $('.fpath').html(path);
                 callback(x);
             } else {
@@ -217,7 +217,7 @@ app = {
         $('.save').on('click', app.f_save_file);
         $('.remove').on('click', app.f_remove_file);
         $('#editor').on('input', function() {
-            $('.words').html(this.value.length);
+            $('.chars').html(this.value.length);
             if (app.savestate) {
                 app.saved(false);
             }
@@ -230,6 +230,14 @@ app = {
                 x.onclick = function() { app.f_open_file(this.innerHTML); };
             });
         };
+        $('.title').on('click', function() {
+            setTimeout('$(".left").addClass("show")', 100);
+        });
+        $('.right').on('click', function() {
+            if ($('.left').hasClass('show')) {
+                $('.left').removeClass('show');
+            }
+        });
         app.f_attach_event();
     }
 }
