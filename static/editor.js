@@ -154,10 +154,26 @@ util = {
 app = {
     workingfile: '',
     workingdir: 'root',
+    savestate: false,
+    saved: function(bool) {
+        app.savestate = bool;
+        if (bool) {
+            $('.savestate').html('Saved to server');
+        } else {
+            $('.savestate').html('Changes unsaved');
+        }
+    },
     fpath: function(fn) {
         return app.workingdir + '/' + fn;
     },
     f_attach_event: function() {},
+    f_close: function(bool = true) {
+        app.workingfile = '';
+        if (bool) {
+            util.close();
+            $('.fpath').html('* None');
+        }
+    },
     f_enter_dir: function(dn) {
         if (dn == '.') {
             console.log(app.workingdir)
@@ -173,34 +189,47 @@ app = {
     },
     f_open_file: function(fn) {
         if (app.workingfile) {
-            util.close();
+            app.f_close(false);
         }
-        util.open(app.fpath(fn), function(x) { app.workingfile = fn; });
+        util.open(app.fpath(fn), function(x) {
+            app.workingfile = fn;
+            $('.fpath').html(app.fpath(fn));
+            app.saved(true);
+        });
     },
     f_save_file: function() {
         if (app.workingfile) {
-            util.commit(app.fpath(app.workingfile), $('#editor').value);
+            util.commit(app.fpath(app.workingfile), $('#editor').value, function(x) {
+                app.saved(true);
+            });
         }
     },
     f_remove_file: function() {
         if (app.workingfile) {
-            util.delete(app.fpath(app.workingfile), function() { app.f_enter_dir('.'); });
+            util.delete(app.fpath(app.workingfile), function() {
+                app.f_enter_dir('.');
+            });
         }
     },
     init: function() {
         $('.save').on('click', app.f_save_file);
         $('.remove').on('click', app.f_remove_file);
+        $('#editor').on('input', function() {
+            $('.words').html(this.value.length);
+            if (app.savestate) {
+                app.saved(false);
+            }
+        });
         app.f_attach_event = function() {
             $('.folder').each(function(x) {
-                x.onclick = function() { app.f_enter_dir(this.innerHTML); };
+                x.on('click', function() { app.f_enter_dir(this.innerHTML); });
             });
             $('.file').each(function(x) {
-                x.onclick = function() { app.f_open_file(this.innerHTML); };
+                x.on('click', function() { app.f_open_file(this.innerHTML); });
             });
         };
         app.f_attach_event();
     }
 }
 
-util.close();
 app.init();

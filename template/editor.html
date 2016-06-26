@@ -103,6 +103,10 @@
             border-left: 1px solid #999;
         }
 
+        .fpath {
+            float: right;
+        }
+
         .dirtree {
             flex: 1;
             padding-right: 2147483647px;
@@ -110,6 +114,10 @@
         }
 
         .dirlist {
+            user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
             list-style: none;
             padding-left: 0;
             font-size: 1rem;
@@ -117,6 +125,7 @@
         }
 
         .dirlist li {
+            cursor: pointer;
             padding: 0.5rem 0;
             padding-left: 30px;
             width: 290px;
@@ -173,7 +182,7 @@
         </div>
         <div class="right">
             <section class="top">
-                <p class="title">index.html</p>
+                <p class="title">* no file is open</p>
                 <input type="button" class="remove" value="RM">
                 <input type="button" class="save" value="SAVE">
             </section>
@@ -181,8 +190,9 @@
                 <textarea id="editor"></textarea>
             </section>
             <section class="end">
-                <span class="info">233 words</span>
-                <span class="info">Saved to server</span>
+                <span class="info"><span class="words">233</span> words</span>
+                <span class="info savestate">Saved to server</span>
+                <span class="info fpath"></span>
             </section>
         </div>
     </div>
