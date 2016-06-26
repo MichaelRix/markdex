@@ -6,6 +6,7 @@ if __name__ == '__main__': exit()
 from os import listdir
 from os.path import isdir, isfile
 from flask import render_template
+from markdown import markdown
 from config import *
 
 def readfile(filename, fileop = 'r'):

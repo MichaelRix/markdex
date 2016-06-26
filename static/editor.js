@@ -33,12 +33,6 @@ $ = function(selector) {
         el.html = function(x) {
             el.innerHTML = x;
         };
-        el.on = function(a, b) {
-            el.addEventListener(a, b);
-        };
-        el.off = function(a, b) {
-            el.removeEventListener(a, b);
-        };
         el.forEach = function(x) { x(el); };
         el.each = function(x) { x(el); };
     }
@@ -222,10 +216,10 @@ app = {
         });
         app.f_attach_event = function() {
             $('.folder').each(function(x) {
-                x.on('click', function() { app.f_enter_dir(this.innerHTML); });
+                x.onclick = function() { app.f_enter_dir(this.innerHTML); };
             });
             $('.file').each(function(x) {
-                x.on('click', function() { app.f_open_file(this.innerHTML); });
+                x.onclick = function() { app.f_open_file(this.innerHTML); };
             });
         };
         app.f_attach_event();

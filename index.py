@@ -9,7 +9,6 @@ if 'version' not in dir():
     exit()
 
 from flask import Flask, Response, render_template, redirect
-from markdown import markdown
 
 app = Flask(__name__, static_folder = static_folder, template_folder = template_folder)
 
