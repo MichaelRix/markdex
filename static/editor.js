@@ -91,7 +91,7 @@ util = {
                 hypertext += '<li><a class="file">' + a + '</a></li>\n';
             });
             $('.dirlist').html(hypertext);
-            callback();
+            callback(x);
         });
     },
     filename: function(path) {
@@ -154,6 +154,12 @@ util = {
     }
 };
 
+dir = {
+    locked: false,
+    lock: function() { dir.locked = true; },
+    unlock: function() { dir.locked = false; }
+}
+
 app = {
     workingfile: '',
     workingdir: 'root',
@@ -178,8 +184,8 @@ app = {
         }
     },
     f_enter_dir: function(dn) {
+        if (dir.locked) return false;
         if (dn == '.') {
-            console.log(app.workingdir)
             path = app.workingdir;
         }
         else if (dn == '..') {
@@ -187,8 +193,12 @@ app = {
         } else {
             path = app.workingdir + '/' + dn;
         }
-        util.fetch(path, app.f_attach_event);
-        app.workingdir = path;
+        dir.lock();
+        util.fetch(path, function() {
+            app.f_attach_event();
+            app.workingdir = path;
+            dir.unlock();
+        });
     },
     f_open_file: function(fn) {
         if (app.workingfile) {
