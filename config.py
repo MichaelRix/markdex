@@ -31,4 +31,7 @@ dl_header = '.desc'
 with_extname = True
 # Url routing for .md files.
 # True -> must have the .md extension
+# Url like: http://localhost:5000/example/file1.md
 # False -> must NOT have the .md extension
+# Url like: http://localhost:5000/example/file1
+# Whatever you set this value, the file (e.g. file1.md) must have .md extension.
