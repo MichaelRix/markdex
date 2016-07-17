@@ -1,53 +1,522 @@
-/* CSS of GitHub Markdown */
-body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;line-height:1.6;word-wrap:break-word;padding:30px;font-size:16px;color:#333;overflow:scroll;overflow-x:hidden;background-color:#fff}
-body>:first-child{margin-top:0!important}
-body>:last-child{margin-bottom:0!important}
-body a{color:#4078c0;text-decoration:none}
-body .absent{color:#c00}
-body .anchor{position:absolute;top:0;left:0;display:block;padding-right:6px;padding-left:30px;margin-left:-30px}
-body .anchor:focus{outline:0}
-body h1,body h2,body h3,body h4,body h5,body h6{position:relative;margin-top:1em;margin-bottom:16px;font-weight:700;line-height:1.4}
-body h1 .octicon-link,body h2 .octicon-link,body h3 .octicon-link,body h4 .octicon-link,body h5 .octicon-link,body h6 .octicon-link{display:none;color:#000;vertical-align:middle}
-body h1:hover .anchor,body h2:hover .anchor,body h3:hover .anchor,body h4:hover .anchor,body h5:hover .anchor,body h6:hover .anchor{padding-left:8px;margin-left:-30px;text-decoration:none}
-body h1:hover .anchor .octicon-link,body h2:hover .anchor .octicon-link,body h3:hover .anchor .octicon-link,body h4:hover .anchor .octicon-link,body h5:hover .anchor .octicon-link,body h6:hover .anchor .octicon-link{display:inline-block}
-body h1 code,body h1 tt,body h2 code,body h2 tt,body h3 code,body h3 tt,body h4 code,body h4 tt,body h5 code,body h5 tt,body h6 code,body h6 tt{font-size:inherit}
-body h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
-body h1 .anchor{line-height:1}
-body h2{padding-bottom:.3em;font-size:1.75em;line-height:1.225;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eee}
-body h2 .anchor{line-height:1}
-body h3{font-size:1.5em;line-height:1.43}
-body h3 .anchor{line-height:1.2}
-body h4{font-size:1.25em}
-body h4 .anchor{line-height:1.2}
-body h5{font-size:1em}
-body h5 .anchor{line-height:1.1}
-body h6{font-size:1em;color:#777}
-body h6 .anchor{line-height:1.1}
-body blockquote,body dl,body ol,body p,body pre,body table,body ul{margin-top:0;margin-bottom:16px}
-body hr{height:4px;padding:0;margin:16px 0;border:0 none;background-color:#e7e7e7}
-body ol,body ul{padding-left:2em}
-body ol.no-list,body ul.no-list{padding:0;list-style-type:none}
-body ol ol,body ol ul,body ul ol,body ul ul{margin-top:0;margin-bottom:0}
-body li>p{margin-top:16px}
-body dl{padding:0}
-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}
-body dl dd{padding:0 16px;margin-bottom:16px}
-body blockquote{padding:0 15px;color:#777;border-left-width:4px;border-left-style:solid;border-left-color:#ddd}
-body blockquote>:first-child{margin-top:0}
-body blockquote>:last-child{margin-bottom:0}
-body table{display:block;width:100%;overflow:auto;word-break:keep-all}
-body table th{font-weight:700}
-body table td,body table th{padding:6px 13px;border:1px solid #ddd}
-body table tr{border-top-width:1px;border-top-style:solid;border-top-color:#ccc;background-color:#fff}
-body table tr:nth-child(2n){background-color:#f8f8f8}
-body img{max-width:100%;box-sizing:border-box}
-body .emoji{max-width:none}
-body span.frame{display:block;overflow:hidden}
-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}
-body span.frame span img{display:block;float:left}
-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}
-body span.align-center{display:block;overflow:hidden;clear:both}
-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}
-body span.align-center span img{margin:0 auto;text-align:center}
-body span.align-right{display:block;overflow:hidden;clear:both}
-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}
+/* Stylesheet from atom-material theme (MIT) */
+
+.markdown {
+    font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+    line-height: 1.6;
+    word-wrap: break-word;
+    padding: 30px;
+    font-size: 16px;
+    color: rgb(51, 51, 51);
+    overflow: scroll;
+    background-color: rgb(255, 255, 255);
+}
+
+.markdown>:first-child {
+    margin-top: 0px !important;
+}
+
+.markdown>:last-child {
+    margin-bottom: 0px !important;
+}
+
+.markdown a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+}
+
+.markdown .absent {
+    color: rgb(204, 0, 0);
+}
+
+.markdown .anchor {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: block;
+    padding-right: 6px;
+    padding-left: 30px;
+    margin-left: -30px;
+}
+
+.markdown .anchor:focus {
+    outline: none;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 16px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.markdown h1 .octicon-link,
+.markdown h2 .octicon-link,
+.markdown h3 .octicon-link,
+.markdown h4 .octicon-link,
+.markdown h5 .octicon-link,
+.markdown h6 .octicon-link {
+    display: none;
+    color: rgb(0, 0, 0);
+    vertical-align: middle;
+}
+
+.markdown h1:hover .anchor,
+.markdown h2:hover .anchor,
+.markdown h3:hover .anchor,
+.markdown h4:hover .anchor,
+.markdown h5:hover .anchor,
+.markdown h6:hover .anchor {
+    padding-left: 8px;
+    margin-left: -30px;
+    text-decoration: none;
+}
+
+.markdown h1:hover .anchor .octicon-link,
+.markdown h2:hover .anchor .octicon-link,
+.markdown h3:hover .anchor .octicon-link,
+.markdown h4:hover .anchor .octicon-link,
+.markdown h5:hover .anchor .octicon-link,
+.markdown h6:hover .anchor .octicon-link {
+    display: inline-block;
+}
+
+.markdown h1 tt,
+.markdown h2 tt,
+.markdown h3 tt,
+.markdown h4 tt,
+.markdown h5 tt,
+.markdown h6 tt,
+.markdown h1 code,
+.markdown h2 code,
+.markdown h3 code,
+.markdown h4 code,
+.markdown h5 code,
+.markdown h6 code {
+    font-size: inherit;
+}
+
+.markdown h1 {
+    padding-bottom: 0.3em;
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(238, 238, 238);
+}
+
+.markdown h1 .anchor {
+    line-height: 1;
+}
+
+.markdown h2 {
+    padding-bottom: 0.3em;
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(238, 238, 238);
+}
+
+.markdown h2 .anchor {
+    line-height: 1;
+}
+
+.markdown h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+
+.markdown h3 .anchor {
+    line-height: 1.2;
+}
+
+.markdown h4 {
+    font-size: 1.25em;
+}
+
+.markdown h4 .anchor {
+    line-height: 1.2;
+}
+
+.markdown h5 {
+    font-size: 1em;
+}
+
+.markdown h5 .anchor {
+    line-height: 1.1;
+}
+
+.markdown h6 {
+    font-size: 1em;
+    color: rgb(119, 119, 119);
+}
+
+.markdown h6 .anchor {
+    line-height: 1.1;
+}
+
+.markdown p,
+.markdown blockquote,
+.markdown ul,
+.markdown ol,
+.markdown dl,
+.markdown table,
+.markdown pre {
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
+
+.markdown hr {
+    height: 4px;
+    padding: 0px;
+    margin: 16px 0px;
+    border: 0px none;
+    background-color: rgb(231, 231, 231);
+}
+
+.markdown ul,
+.markdown ol {
+    padding-left: 2em;
+}
+
+.markdown ul.no-list,
+.markdown ol.no-list {
+    padding: 0px;
+    list-style-type: none;
+}
+
+.markdown ul ul,
+.markdown ul ol,
+.markdown ol ol,
+.markdown ol ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.markdown li> p {
+    margin-top: 16px;
+}
+
+.markdown dl {
+    padding: 0px;
+}
+
+.markdown dl dt {
+    padding: 0px;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.markdown dl dd {
+    padding: 0px 16px;
+    margin-bottom: 16px;
+}
+
+.markdown blockquote {
+    margin-left: 0px;
+    padding: 0px 15px;
+    color: rgb(119, 119, 119);
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: rgb(221, 221, 221);
+}
+
+.markdown blockquote>:first-child {
+    margin-top: 0px;
+}
+
+.markdown blockquote>:last-child {
+    margin-bottom: 0px;
+}
+
+.markdown table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+}
+
+.markdown table th {
+    font-weight: bold;
+}
+
+.markdown table th,
+.markdown table td {
+    padding: 6px 13px;
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.markdown table tr {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(204, 204, 204);
+    background-color: rgb(255, 255, 255);
+}
+
+.markdown table tr:nth-child(2n) {
+    background-color: rgb(248, 248, 248);
+}
+
+.markdown img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.markdown .emoji {
+    max-width: none;
+}
+
+.markdown span.frame {
+    display: block;
+    overflow: hidden;
+}
+
+.markdown span.frame> span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0px 0px;
+    overflow: hidden;
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.markdown span.frame span img {
+    display: block;
+    float: left;
+}
+
+.markdown span.frame span span {
+    display: block;
+    padding: 5px 0px 0px;
+    clear: both;
+    color: rgb(51, 51, 51);
+}
+
+.markdown span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+
+.markdown span.align-center> span {
+    display: block;
+    margin: 13px auto 0px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.markdown span.align-center span img {
+    margin: 0px auto;
+    text-align: center;
+}
+
+.markdown span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+
+.markdown span.align-right> span {
+    display: block;
+    margin: 13px 0px 0px;
+    overflow: hidden;
+    text-align: right;
+}
+
+.markdown span.align-right span img {
+    margin: 0px;
+    text-align: right;
+}
+
+.markdown span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+}
+
+.markdown span.float-left span {
+    margin: 13px 0px 0px;
+}
+
+.markdown span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+}
+
+.markdown span.float-right> span {
+    display: block;
+    margin: 13px auto 0px;
+    overflow: hidden;
+    text-align: right;
+}
+
+.markdown code,
+.markdown tt {
+    padding: 0.2em 0px;
+    margin: 0px;
+    font-size: 85%;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.0392157);
+}
+
+.markdown code::before,
+.markdown tt::before,
+.markdown code::after,
+.markdown tt::after {
+    letter-spacing: -0.2em;
+    content: " ";
+}
+
+.markdown code br,
+.markdown tt br {
+    display: none;
+}
+
+.markdown del code {
+    text-decoration: inherit;
+}
+
+.markdown pre> code {
+    padding: 0px;
+    margin: 0px;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    border: 0px;
+    background: transparent;
+}
+
+.markdown .highlight {
+    margin-bottom: 16px;
+}
+
+.markdown .highlight pre,
+.markdown pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    border-radius: 3px;
+    background-color: rgb(247, 247, 247);
+}
+
+.markdown .highlight pre {
+    margin-bottom: 0px;
+    word-break: normal;
+}
+
+.markdown pre {
+    word-wrap: normal;
+}
+
+.markdown pre code,
+.markdown pre tt {
+    display: inline;
+    max-width: initial;
+    padding: 0px;
+    margin: 0px;
+    overflow: initial;
+    line-height: inherit;
+    word-wrap: normal;
+    border: 0px;
+    background-color: transparent;
+}
+
+.markdown pre code::before,
+.markdown pre tt::before,
+.markdown pre code::after,
+.markdown pre tt::after {
+    content: normal;
+}
+
+.markdown kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: rgb(85, 85, 85);
+    vertical-align: middle;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187);
+    border-radius: 3px;
+    box-shadow: rgb(187, 187, 187) 0px -1px 0px inset;
+    background-color: rgb(252, 252, 252);
+}
+
+.markdown a {
+    color: rgb(51, 122, 183);
+}
+
+.markdown code {
+    color: inherit;
+}
+
+.markdown pre.editor-colors {
+    padding: 0.8em 1em;
+    margin-bottom: 1em;
+    font-size: 0.85em;
+    border-radius: 4px;
+    overflow: auto;
+}
+
+.scrollbars-visible-always .markdown pre.editor-colors::shadow .vertical-scrollbar,
+.scrollbars-visible-always .markdown pre.editor-colors::shadow .horizontal-scrollbar {
+    visibility: hidden;
+}
+
+.scrollbars-visible-always .markdown pre.editor-colors:hover::shadow .vertical-scrollbar,
+.scrollbars-visible-always .markdown pre.editor-colors:hover::shadow .horizontal-scrollbar {
+    visibility: visible;
+}
+
+.markdown {
+    color: rgba(96, 125, 139, 0.8);
+    background-color: rgb(255, 255, 255);
+}
+
+.markdown code {
+    color: rgba(96, 125, 139, 0.8);
+    background-color: rgb(255, 255, 255);
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+    border-color: rgba(96, 125, 139, 0.0980392);
+}
+
+.markdown table tr {
+    border-color: rgb(255, 255, 255);
+    background: none;
+}
+
+.markdown table tr:nth-child(2n) {
+    background-color: rgb(255, 255, 255);
+}
+
+.markdown table th,
+.markdown table td {
+    border-color: rgb(255, 255, 255);
+}
+
+.markdown table th {
+    background-color: rgb(255, 255, 255);
+}
+
+.bracket-matcher .region {
+    border-bottom: 1px dotted lime;
+    position: absolute;
+}
