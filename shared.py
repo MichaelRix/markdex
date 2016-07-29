@@ -64,19 +64,19 @@ def get_flist(dir_uri):
     things = dirs + files
     return things
 
-def process_file(request_uri):
+def process_file(request_uri, is_index = False):
     try:
         md = readfile(u2fpath(request_uri))
     except:
         return page_404(request_uri)
     else:
         html = markdown(md)
-        return render_template('page.html', title = request_uri, content = html)
+        return render_template('page.html', title = request_uri, content = html, dirlist = dir_listing and not is_index)
 
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
     if isfile(u2path(dir_uri) + 'index.md'):
-        return process_file(ucreate(dir_uri + 'index'))
+        return process_file(ucreate(dir_uri + 'index'), True)
     elif dir_listing:
         things = get_flist(dir_uri)
         if isfile(u2path(dir_uri + dl_header)):
