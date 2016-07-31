@@ -87,7 +87,7 @@ def handle(request_uri):
 @app.route('/')
 def index():
     if isfile(un2fpath('index')):
-        return process_file(ucreate('index'))
+        return process_file(ucreate('index'), True)
     else:
         return render_template('index.html')
 

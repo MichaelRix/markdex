@@ -1,13 +1,13 @@
-/* Stylesheet from atom-material theme (MIT) */
+/* Stylesheet from atom-material-ui theme (MIT) */
+/* MARKDOWN */
 
 .markdown {
-    font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, 'WenQuanYi ZenHei', 'Microsoft Jhenghei', 'Microsoft Yahei', sans-serif;
     line-height: 1.6;
     word-wrap: break-word;
     padding: 30px;
     font-size: 16px;
     color: rgb(51, 51, 51);
-    overflow: scroll;
     background-color: rgb(255, 255, 255);
 }
 
@@ -360,6 +360,11 @@
     margin: 13px auto 0px;
     overflow: hidden;
     text-align: right;
+}
+
+.markdown strong,
+.markdown b {
+    font-weight: bold;
 }
 
 .markdown code,
