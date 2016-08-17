@@ -1,57 +1,7 @@
-/* Fake jQuery */
-$ = function(selector) {
-    els = document.querySelectorAll(selector);
-    for (i = 0; i < els.length; i++) {
-        el = els[i];
-        el.addClass = function(x) {
-            if (el.classList) { el.classList.add(x); }
-            else { el.className += ' ' + x; }
-            return el;
-        };
-        el.removeClass = function(x) {
-            if (el.classList) {
-                el.classList.remove(x);
-            }
-            else {
-                el.className = el.className.replace(new RegExp('(^|\\b)' + x.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-            }
-            return el;
-        };
-        el.hasClass = function(x) {
-            if (el.classList) {
-                return el.classList.contains(x);
-            } else {
-                return new RegExp('(^| )' + x + '( |$)', 'gi').test(el.className);
-            }
-        };
-        el.remove = function(x) {
-            el.parentNode.removeChild(el);
-        };
-        el.attr = function(a, b) {
-            el.setAttribute(a, b);
-        };
-        el.html = function(x) {
-            el.innerHTML = x;
-        };
-        el.on = function(a, b) {
-            el.addEventListener(a, b);
-        };
-        el.off = function(a, b) {
-            el.removeEventListener(a, b);
-        };
-        el.forEach = function(x) { x(el); };
-        el.each = function(x) { x(el); };
-    }
-    if (els.length == 1) return els.item(0);
-    else {
-        els.each = function(x) {
-            for(i = 0; i < els.length; i++) {
-                x(els[i]);
-            }
-        };
-        return els;
-    }
-};
+/* youdontneedjquery */
+$ = document.querySelector.bind(document);
+$all = document.querySelectorAll.bind(document);
+
 _ = {
     get: function(url, callback, error = function() {}) {
         req = new XMLHttpRequest();
@@ -76,48 +26,65 @@ _ = {
         req.send(data);
     }
 };
-/* End fake jQuery */
 
 util = {
+    /* Get directory content from server, and show in dirlist
+     * callback
+     */
     fetch: function(path, callback = function() {}) {
         url = '__editor__?act=l&p=' + encodeURI(path);
         _.get(url, function(x) {
             x = JSON.parse(x);
-            hypertext = '';
-            x.folders.forEach(function(a) {
-                hypertext += '<li><a class="folder">' + a + '</a></li>\n';
-            });
-            x.files.forEach(function(a) {
-                hypertext += '<li><a class="file">' + a + '</a></li>\n';
-            });
-            $('.dirlist').html(hypertext);
-            callback(x);
+            if (x.status == 'ok') {
+                hypertext = '';
+                x.folders.forEach(function(a) {
+                    hypertext += '<li><a class="folder">' + a + '</a></li>\n';
+                });
+                x.files.forEach(function(a) {
+                    hypertext += '<li><a class="file">' + a + '</a></li>\n';
+                });
+                $('.dirlist').innerHTML = hypertext;
+                callback(x);
+            }
         });
     },
+    /* Get current filename
+     * from file path
+     */
     filename: function(path) {
         return path.substr(path.lastIndexOf('/') + 1);
     },
+    /* Close current file
+     * reset editor
+     */
     close: function() {
-        $('.title').html('* no file is open');
+        $('.title').innerHTML = '* no file is open';
         $('#editor').value = '';
-        $('.chars').html('0');
+        $('.chars').innerHTML = '0';
     },
+    /* Open a file <- path
+     * Init editor with values
+     * callback
+     */
     open: function(path, callback = function() {}) {
         url = '__editor__?act=r&p=' + encodeURI(path);
         _.get(url, function(x) {
             x = JSON.parse(x);
             if (x.status == 'ok') {
                 content = x.content;
-                $('.title').html(util.filename(path));
+                $('.title').innerHTML = util.filename(path);
                 $('#editor').value = content;
-                $('.chars').html(content.length);
-                $('.fpath').html(path);
+                $('.chars').innerHTML = content.length;
+                $('.fpath').innerHTML = path;
                 callback(x);
             } else {
                 console.log('An error occured while opening file `' + path + '`;');
             }
         });
     },
+    /* Create a file <- path
+     * callback
+     */
     create: function(path, callback = function() {}) {
         url = '__editor__?act=c&p=' + encodeURI(path);
         _.get(url, function(x) {
@@ -129,6 +96,9 @@ util = {
             }
         });
     },
+    /* Commit changes to a file <- path content
+     * callback
+     */
     commit: function(path, content, callback = function() {}) {
         url = '__editor__?act=w&p=' + encodeURI(path);
         _.post(url, 'content=' + encodeURIComponent(content), function(x) {
@@ -140,6 +110,9 @@ util = {
             }
         });
     },
+    /* Delete a file <- path
+     * callback
+     */
     delete: function(path, callback = function() {}) {
         url = '__editor__?act=d&p=' + encodeURI(path);
         _.get(url, function(x) {
@@ -155,43 +128,51 @@ util = {
 };
 
 dir = {
-    locked: false,
+    locked: false, // is in open process
     lock: function() { dir.locked = true; },
     unlock: function() { dir.locked = false; }
 }
 
 app = {
-    workingfile: '',
-    workingdir: 'root',
-    savestate: false,
+    workingfile: '', // working file's NAME
+    workingdir: '/', // RELATIVE to `root` and endsWith '/'
+    savestate: false, // is SAVED or CHANGED but not SAVED
     saved: function(bool) {
         app.savestate = bool;
         if (bool) {
-            $('.savestate').html('Saved to server');
+            $('.savestate').innerHTML = 'Saved to server';
         } else {
-            $('.savestate').html('Changes unsaved');
+            $('.savestate').innerHTML = 'Changes unsaved';
         }
     },
+    // Get file full path <- filename
     fpath: function(fn) {
-        return app.workingdir + '/' + fn;
+        return app.workingdir + fn;
     },
+    // Will be set in future
     f_attach_event: function() {},
+    // Close a file
     f_close: function(bool = true) {
         app.workingfile = '';
-        if (bool) {
+        if (bool) { // Need to clean the workspace?
             util.close();
-            $('.fpath').html('* None');
+            $('.fpath').innerHTML = '* None';
+        }
+        c = $('.current');
+        if (c != null) {
+            c.classList.remove('current');
         }
     },
+    // Enter a directory <- dirname relative
     f_enter_dir: function(dn) {
         if (dir.locked) return false;
         if (dn == '.') {
             path = app.workingdir;
         }
         else if (dn == '..') {
-            path = app.workingdir.substr(0, app.workingdir.lastIndexOf('/'))
+            path = app.workingdir.replace(/[^\/]+?\/$/, '');
         } else {
-            path = app.workingdir + '/' + dn;
+            path = app.workingdir + dn + '/';
         }
         dir.lock();
         util.fetch(path, function() {
@@ -200,7 +181,10 @@ app = {
             dir.unlock();
         });
     },
-    f_open_file: function(fn) {
+    /* Open file <- filename
+     * ano_element <- user clicked <a class="file"> element
+     */
+    f_open_file: function(fn, ano_element = null) {
         if (app.workingfile) {
             app.f_close(false);
         }
@@ -208,7 +192,11 @@ app = {
             app.workingfile = fn;
             app.saved(true);
         });
+        if (ano_element) {
+            ano_element.classList.add('current');
+        }
     },
+    // Commit file changes (current file)
     f_save_file: function() {
         if (app.workingfile) {
             util.commit(app.fpath(app.workingfile), $('#editor').value, function(x) {
@@ -216,6 +204,7 @@ app = {
             });
         }
     },
+    // Delete current file <- WORKING FILE
     f_remove_file: function() {
         if (app.workingfile) {
             util.delete(app.fpath(app.workingfile), function() {
@@ -223,29 +212,35 @@ app = {
             });
         }
     },
+    // Initialize
     init: function() {
-        $('.save').on('click', app.f_save_file);
-        $('.remove').on('click', app.f_remove_file);
-        $('#editor').on('input', function() {
-            $('.chars').html(this.value.length);
+        $('.save').addEventListener('click', app.f_save_file);
+        $('.remove').addEventListener('click', app.f_remove_file);
+        $('#editor').addEventListener('input', function() {
+            $('.chars').innerHTML = this.value.length;
             if (app.savestate) {
-                app.saved(false);
+                app.saved(false); // state to UNSAVED
             }
         });
         app.f_attach_event = function() {
-            $('.folder').each(function(x) {
-                x.onclick = function() { app.f_enter_dir(this.innerHTML); };
+            $all('.folder').forEach(function(x) {
+                x.addEventListener('click', (function() {
+                    app.f_enter_dir(this.innerHTML);
+                }).bind(x));
             });
-            $('.file').each(function(x) {
-                x.onclick = function() { app.f_open_file(this.innerHTML); };
+            $all('.file').forEach(function(x) {
+                x.addEventListener('click', (function() {
+                    app.f_open_file(this.innerHTML, this);
+                }).bind(x));
             });
         };
-        $('.title').on('click', function() {
-            setTimeout('$(".left").addClass("show")', 100);
+        $('.title').addEventListener('click', function() {
+            // Stupid design but it works
+            setTimeout(function() { $('.left').classList.add('show') }, 100);
         });
-        $('.right').on('click', function() {
-            if ($('.left').hasClass('show')) {
-                $('.left').removeClass('show');
+        $('.right').addEventListener('click', function() {
+            if ($('.left').classList.contains('show')) {
+                $('.left').classList.remove('show');
             }
         });
         app.f_attach_event();

@@ -13,10 +13,11 @@ import json
 def path_qingzhen(func):
     @wraps(func)
     def qingzhen(*args, **kwargs):
-        path = args[0]
-        qingzhen = abspath(u2path('/'))
+        path = root + args[0]
+        newargs = (path, *args[1:])
+        qingzhen = abspath(uri.d2f('/'))
         if abspath(path).startswith(qingzhen):
-            return func(*args, **kwargs) # 可以，這很清真
+            return func(*newargs, **kwargs) # 可以，這很清真
         else: return '無可奉告' # 這路徑不清真
     return qingzhen
 
@@ -30,6 +31,7 @@ def backend_openfile(path):
                 return json.dumps({'status': 'error', 'content': ''})
             else:
                 return json.dumps({'status': 'ok', 'content': content})
+    return 'FAILURE'
 
 @path_qingzhen
 def backend_listdir(path, ajax = False):
@@ -37,7 +39,7 @@ def backend_listdir(path, ajax = False):
     if isdir(path):
         if not path.endswith('/'): path = path + '/'
         dirs, files = [], []
-        if path != u2path('/'):
+        if path != uri.d2f('/'):
             dirs.append('..')
         for name in listdir(path):
             if isdir(path + name): dirs.append(name)
@@ -46,7 +48,7 @@ def backend_listdir(path, ajax = False):
         dirs.sort()
         files.sort()
         if ajax:
-            return json.dumps({'folders': dirs, 'files': files})
+            return json.dumps({'status': 'ok', 'folders': dirs, 'files': files})
         else:
             return render_template('editor.html', folders = dirs, files = files)
     else: return json.dumps({'status': 'nok'})

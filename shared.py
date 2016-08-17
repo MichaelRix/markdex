@@ -23,38 +23,50 @@ def message(text):
     print('[ SERVER ] %s' % (text))
 
 def page_404(request_uri):
-    message('Issued a 404 while handling /%s .' % (request_uri))
+    message('Issued a 404 while handling %s .' % (request_uri))
     return render_template('404.html', uri = request_uri)
 
 def page_403(request_uri):
-    message('Issued a 403 while handling /%s .' % (request_uri))
+    message('Issued a 403 while handling %s .' % (request_uri))
     return render_template('403.html', uri = request_uri)
 
-def u2path(request_uri):
-    # Returns path starts at root
-    if request_uri == '/': return root
-    return root + request_uri
+class uri:
+    '''
+    / - Global var 'root'
+    d - Directory uri
+    u - User input uri
+    f - Relative uri in filesystem
+    n - No .md EXTN
+    c - Creation of uri
+    '''
+    @staticmethod
+    def d2f(d):
+        return root + d
 
-def u2fpath(request_uri):
-    # Returns real file path according to request uri
-    if with_extname: return root + request_uri
-    else: return root + request_uri + '.md'
+    @staticmethod
+    def u2f(u): # User to Filesystem
+        if with_extname:
+            return root + u
+        else:
+            return root + u + '.md'
 
-def ucreate(uri_noext):
-    # Returns a request uri according to uri without ext
-    if with_extname: return uri_noext + '.md'
-    else: return uri_noext
+    @staticmethod
+    def cf(n): # Create Fileuri
+        return root + n + '.md'
 
-def un2fpath(uri_noext):
-    # Returns real file path according to uri without ext
-    return u2fpath(ucreate(uri_noext))
+    @staticmethod
+    def cu(n):
+        if with_extname:
+            return n + '.md'
+        else:
+            return n
 
 def get_flist(dir_uri):
     dirs, files = [], []
     if dir_uri != '/':
         dirs.append('..')
-    for name in listdir(u2path(dir_uri)):
-        if isdir(u2path(dir_uri + name)): dirs.append(name)
+    for name in listdir(uri.d2f(dir_uri)):
+        if isdir(uri.d2f(dir_uri + name)): dirs.append(name)
         if (name.endswith('.md')):
             if not with_extname: name = name[:-3]
             # 秘製賣萌 233333~
@@ -66,7 +78,7 @@ def get_flist(dir_uri):
 
 def process_file(request_uri, is_index = False):
     try:
-        md = readfile(u2fpath(request_uri))
+        md = readfile(uri.u2f(request_uri))
     except:
         return page_404(request_uri)
     else:
@@ -75,14 +87,14 @@ def process_file(request_uri, is_index = False):
 
 def process_dir(dir_uri):
     if not dir_uri.endswith('/'): dir_uri = dir_uri + '/'
-    if isfile(u2path(dir_uri) + 'index.md'):
-        return process_file(ucreate(dir_uri + 'index'), True)
+    if isfile(uri.cf(dir_uri + 'index')):
+        return process_file(uri.cf(dir_uri + 'index'), True)
     elif dir_listing:
         things = get_flist(dir_uri)
-        if isfile(u2path(dir_uri + dl_header)):
-            header = readfile(u2path(dir_uri + dl_header))
-            return render_template('listing.html', path = '/' + dir_uri, things = things, header = header)
+        if isfile(uri.d2f(dir_uri + dl_header)):
+            header = readfile(uri.d2f(dir_uri + dl_header))
+            return render_template('listing.html', path = dir_uri, things = things, header = header)
         else:
-            return render_template('listing.html', path = '/' + dir_uri, things = things)
+            return render_template('listing.html', path = dir_uri, things = things)
     else:
         return page_403(dir_uri)

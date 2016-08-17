@@ -32,7 +32,7 @@ def editor_page():
     if auth_still():
         act = request.args.get('act')
         if act == None:
-            return backend_listdir(u2path('/'))
+            return backend_listdir('/')
         else:
             path = request.args.get('p')
             if path != None:
@@ -77,17 +77,18 @@ def _favicon_ico():
 
 @app.route('/<path:request_uri>')
 def handle(request_uri):
-    if isfile(u2fpath(request_uri)):
+    request_uri = '/' + request_uri
+    if isfile(uri.u2f(request_uri)):
         return process_file(request_uri)
-    elif isdir(u2path(request_uri)):
+    elif isdir(uri.d2f(request_uri)):
         return process_dir(request_uri)
     else:
         return page_404(request_uri)
 
 @app.route('/')
 def index():
-    if isfile(un2fpath('index')):
-        return process_file(ucreate('index'), True)
+    if isfile(uri.cf('/index')):
+        return process_file(uri.cu('/index'), True)
     else:
         return render_template('index.html')
 

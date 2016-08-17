@@ -14,9 +14,7 @@ host = '0.0.0.0'
 port = 5000
 # SERVER port
 
-root = 'root/'
-# Document root: Where you place .md files
-
+root = 'root'
 static_folder = 'static'
 template_folder = 'template'
 # Do not end with '/'
